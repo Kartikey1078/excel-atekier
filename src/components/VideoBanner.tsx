@@ -19,7 +19,7 @@ export function VideoBanner() {
           preload="auto"
           aria-label="Studio showcase video"
         >
-          <source src="/banner.mp4" type="video/mp4" />
+          <source src="/bannersmall.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/15" />
         <div className="site-container absolute inset-x-0 top-6 md:top-10">

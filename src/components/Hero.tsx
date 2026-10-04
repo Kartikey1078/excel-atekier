@@ -24,7 +24,7 @@ export function Hero() {
         preload="metadata"
         aria-hidden
       >
-        <source src="/banner.mp4" type="video/mp4" />
+        <source src="/bannersmall.mp4" type="video/mp4" />
       </video>
       <div
         className="pointer-events-none absolute inset-0 z-[1] bg-black/25 md:bg-black/20"

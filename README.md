@@ -85,7 +85,7 @@ No backend, Redis, or server-side data cache — only static generation and HTTP
 
 ### After deploy
 
-- Confirm hero video: `/banner.mp4`
+- Confirm hero video: `/bannersmall.mp4`
 - Confirm images in **News** and **Expertise** load (local `/news/*` + remote Unsplash where used)
 - Test **Enquire now** (`tel:+918708533636`) on a phone
 - Test footer contact form (client-side success modal only until a backend is connected)
