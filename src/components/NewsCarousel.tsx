@@ -2,9 +2,9 @@
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { newsItems } from "@/data/home";
-import { COMPANY_NAME } from "@/lib/brand";
 import { Reveal } from "./Reveal";
 
 const total = newsItems.length;
@@ -53,26 +53,31 @@ export function NewsCarousel() {
 
   return (
     <section
-      id="news"
+      id="architecture"
       className="overflow-x-hidden bg-black px-4 pt-6 text-white sm:px-6 sm:pt-8 md:px-10 md:pt-10 pb-12 sm:pb-16 md:pb-24"
     >
       <div className="mx-auto w-full max-w-[1920px]">
         <Reveal className="mb-6 md:mb-10">
           <div className="mobile-readable space-y-3 sm:space-y-4 md:max-w-5xl md:space-y-6">
             <p className="text-p-sm uppercase tracking-[0.12em] text-white/90 md:text-sm">
-              News
+              Architecture
             </p>
             <h2 className="text-editorial-title tracking-tight text-white">
-              What&apos;s new at {COMPANY_NAME}
+              Ideas, buildings, and work in the world
             </h2>
             <p className="text-editorial-body text-white/80 md:max-w-4xl">
-              We&apos;re a growing studio with work in design, on site, and in the
-              pipeline. Here we share{" "}
-              <span className="font-medium text-white">project launches</span>,{" "}
-              <span className="font-medium text-white">work in progress</span>, and{" "}
-              <span className="font-medium text-white">partnerships</span> that shape
-              what we build next—clear updates, no filler.
+              A rotating look at{" "}
+              <span className="font-medium text-white">projects</span>,{" "}
+              <span className="font-medium text-white">studies</span>, and{" "}
+              <span className="font-medium text-white">built work</span>—from towers and
+              campuses to public space and adaptive reuse.
             </p>
+            <Link
+              href="/architecture"
+              className="inline-flex text-i-xs uppercase tracking-[0.14em] text-white/80 transition-colors hover:text-white"
+            >
+              View all stories →
+            </Link>
           </div>
         </Reveal>
 
@@ -86,18 +91,21 @@ export function NewsCarousel() {
               style={{ opacity: index === active ? dragOpacity : 1 }}
               className="group w-[min(88vw,661px)] shrink-0 snap-center p-1 sm:w-[min(90vw,661px)] sm:p-2"
             >
-              <div className="relative aspect-[661/640] w-full overflow-hidden bg-neutral-900">
+              <Link
+                href={`/architecture/${item.slug}`}
+                className="relative block aspect-[661/640] w-full overflow-hidden bg-neutral-900"
+              >
                 <Image
                   src={item.image}
                   alt=""
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                   sizes="(max-width: 768px) 90vw, 661px"
                 />
                 <div className="absolute inset-x-2 bottom-2 rounded-sm bg-white p-3 text-black sm:p-4 md:inset-x-3 md:bottom-3 md:p-5">
                   <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-[0.625rem] sm:mb-4 sm:gap-3 sm:text-i-xs">
                     <span className="rounded-full bg-black px-3 py-1 text-white">
-                      News
+                      Architecture
                     </span>
                     <span className="text-black/60">{item.date}</span>
                     <span className="text-black/60">
@@ -111,7 +119,7 @@ export function NewsCarousel() {
                     {item.excerpt}
                   </p>
                 </div>
-              </div>
+              </Link>
             </motion.article>
           ))}
         </div>
@@ -120,7 +128,7 @@ export function NewsCarousel() {
           <div className="flex gap-2">
             <button
               type="button"
-              aria-label="Previous news item"
+              aria-label="Previous architecture story"
               onClick={() => goTo(active - 1)}
               className="h-10 w-10 border border-white/30 text-sm transition-colors hover:bg-white hover:text-black"
             >
@@ -128,7 +136,7 @@ export function NewsCarousel() {
             </button>
             <button
               type="button"
-              aria-label="Next news item"
+              aria-label="Next architecture story"
               onClick={() => goTo(active + 1)}
               className="h-10 w-10 border border-white/30 text-sm transition-colors hover:bg-white hover:text-black"
             >

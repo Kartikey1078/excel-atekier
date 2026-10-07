@@ -8,7 +8,7 @@ export const navItems = [
   "About Us",
   "Research",
   "Sustainability",
-  "Media Hub",
+  "Architecture",
   "Contact",
 ] as const;
 

@@ -6,7 +6,7 @@ import { Logo } from "./Logo";
 import { COMPANY_NAME } from "@/lib/brand";
 
 const topLinks = ["Contact", "Careers", "Reports", "Expertise"];
-const bottomLinks = ["Privacy Policy", "Terms of Use", "Sustainability", "Media Hub"];
+const bottomLinks = ["Privacy Policy", "Terms of Use", "Sustainability", "Architecture"];
 
 export function Footer() {
   return (

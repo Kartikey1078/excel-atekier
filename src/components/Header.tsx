@@ -14,9 +14,31 @@ const navAnchors: Record<(typeof navItems)[number], string> = {
   "About Us": "/#about",
   Research: "/#research",
   Sustainability: "/#approach",
-  "Media Hub": "/#news",
+  Architecture: "/architecture",
   Contact: "/#contact",
 };
+
+function NavLink({ item, index }: { item: (typeof navItems)[number]; index: number }) {
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.08 + index * 0.04, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className="shrink-0"
+    >
+      <Link
+        href={navAnchors[item]}
+        className="group relative block py-1 text-[0.65rem] font-medium uppercase tracking-[0.14em] text-neutral-800 transition-colors hover:text-black sm:text-i-xs"
+      >
+        {item}
+        <span
+          className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-neutral-900 transition-transform duration-300 ease-out group-hover:scale-x-100"
+          aria-hidden
+        />
+      </Link>
+    </motion.li>
+  );
+}
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,6 +47,16 @@ export function Header() {
     setBodyScrollLock(menuOpen);
     return () => setBodyScrollLock(false);
   }, [menuOpen]);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.matchMedia("(min-width: 768px)").matches) {
+        setMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   const iconClass = "text-neutral-800 hover:bg-neutral-100";
 
@@ -36,7 +68,7 @@ export function Header() {
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="pointer-events-auto mx-auto w-[90%] overflow-hidden rounded-2xl border border-neutral-200/90 bg-white text-neutral-900 shadow-md shadow-black/5 md:rounded-3xl"
       >
-        <div className="flex h-14 items-center justify-between gap-4 px-3 sm:px-5 md:h-[4.5rem] md:px-8">
+        <div className="flex h-14 items-center gap-3 px-3 sm:gap-4 sm:px-5 md:h-[4.5rem] md:gap-6 md:px-8">
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -48,6 +80,14 @@ export function Header() {
             </Link>
           </motion.div>
 
+          <nav aria-label="Main" className="hidden min-w-0 flex-1 md:block">
+            <ul className="flex w-max items-center gap-5 md:mx-auto lg:gap-8">
+              {navItems.map((item, index) => (
+                <NavLink key={item} item={item} index={index} />
+              ))}
+            </ul>
+          </nav>
+
           <motion.button
             type="button"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -55,7 +95,7 @@ export function Header() {
             onClick={() => setMenuOpen((open) => !open)}
             whileHover={{ scale: 1.06 }}
             whileTap={{ scale: 0.94 }}
-            className={`shrink-0 rounded-full p-2 transition-colors ${iconClass}`}
+            className={`ml-auto shrink-0 rounded-full p-2 transition-colors md:hidden ${iconClass}`}
           >
             <span className="relative block h-4 w-5">
               <motion.span
@@ -88,7 +128,7 @@ export function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="pointer-events-auto fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
+              className="pointer-events-auto fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm md:hidden"
               onClick={() => setMenuOpen(false)}
             />
             <motion.aside
@@ -96,7 +136,7 @@ export function Header() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="pointer-events-auto fixed right-0 top-0 z-[70] flex h-[100dvh] w-[min(88vw,320px)] flex-col border-l border-neutral-200 bg-white text-neutral-900 shadow-2xl"
+              className="pointer-events-auto fixed right-0 top-0 z-[70] flex h-[100dvh] w-[min(88vw,320px)] flex-col border-l border-neutral-200 bg-white text-neutral-900 shadow-2xl md:hidden"
             >
               <div className="flex items-center justify-between border-b border-neutral-200 px-5 py-4">
                 <Logo />
@@ -115,7 +155,7 @@ export function Header() {
                   </svg>
                 </button>
               </div>
-              <nav aria-label="Main" className="flex-1 overflow-y-auto px-5 py-6">
+              <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-5 py-6">
                 <ul className="space-y-1">
                   {navItems.map((item, index) => (
                     <motion.li
